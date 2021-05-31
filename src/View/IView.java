@@ -1,5 +1,9 @@
 package View;
 
-public interface IView {
+import ViewModel.MyViewModel;
 
+import java.util.Observer;
+
+public interface IView extends Observer {
+    void setViewModel(MyViewModel viewModel);
 }

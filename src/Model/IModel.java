@@ -1,4 +1,20 @@
 package Model;
 
+import algorithms.search.AState;
+import javafx.scene.input.KeyCode;
+
+import java.util.ArrayList;
+import java.util.Observer;
+
 public interface IModel {
+    void generateMaze(int row, int col);
+    int[][] getMaze();
+    void solveMaze();
+    ArrayList<AState> getSolution();
+    void updateCharacterLocation(KeyCode key);
+    int getRowChar();
+    int getColChar();
+    void saveGame(String fileName);
+    void assignObserver(Observer o);
+
 }

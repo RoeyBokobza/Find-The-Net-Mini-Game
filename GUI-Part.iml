@@ -7,18 +7,7 @@
     </content>
     <orderEntry type="jdk" jdkName="corretto-15" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="lib" level="project" />
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="file://$USER_HOME$/Desktop/‏‏תיקיה חדשה/313560468_208206003" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="file://$USER_HOME$/Desktop/‏‏תיקיה חדשה/313560468_208206003/JUnit" />
-          <root url="file://$USER_HOME$/Desktop/‏‏תיקיה חדשה/313560468_208206003/src" />
-        </SOURCES>
-      </library>
-    </orderEntry>
+    <orderEntry type="library" name="lib1" level="project" />
+    <orderEntry type="library" exported="" name="ATP-Project-PartB" level="project" />
   </component>
 </module>
