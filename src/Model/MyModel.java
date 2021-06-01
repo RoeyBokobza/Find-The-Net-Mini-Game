@@ -4,6 +4,7 @@ import Client.*;
 import IO.MyDecompressorInputStream;
 import Server.*;
 import algorithms.mazeGenerators.Maze;
+import algorithms.mazeGenerators.Position;
 import algorithms.search.AState;
 import algorithms.search.Solution;
 import javafx.scene.input.KeyCode;
@@ -18,14 +19,16 @@ import java.util.Observer;
 
 public class MyModel extends Observable implements IModel {
     private Server mazeGenerator, mazeSolver;
-    private int[][] maze;
+    private Maze maze;
     private int rowChar, colChar;
+    private int rowCharGoal, colCharGoal;
     private Solution mazeSolution;
 
 
     public MyModel(){
+
         mazeGenerator = new Server(5400, 1000, new ServerStrategyGenerateMaze());
-        mazeSolver = new Server(5400, 1000, new ServerStrategySolveSearchProblem());
+        mazeSolver = new Server(5401, 1000, new ServerStrategySolveSearchProblem());
         mazeGenerator.start();
         mazeSolver.start();
         maze = null;
@@ -34,7 +37,7 @@ public class MyModel extends Observable implements IModel {
 
     @Override
     public int[][] getMaze() {
-        return maze;
+        return maze.getMatrix();
     }
 
     @Override
@@ -47,9 +50,19 @@ public class MyModel extends Observable implements IModel {
         return colChar;
     }
 
+    @Override
+    public int getRowCharGoal() {
+        return rowCharGoal;
+    }
+
+    @Override
+    public int getColCharGoal() {
+        return colCharGoal;
+    }
+
     public void Reopen(){
         mazeGenerator = new Server(5400, 1000, new ServerStrategyGenerateMaze());
-        mazeSolver = new Server(5400, 1000, new ServerStrategySolveSearchProblem());
+        mazeSolver = new Server(5401, 1000, new ServerStrategySolveSearchProblem());
         mazeGenerator.start();
         mazeSolver.stop();
     }
@@ -96,12 +109,14 @@ public class MyModel extends Observable implements IModel {
                         toServer.flush();
                         byte[] compressedMaze = (byte[]) fromServer.readObject(); //read generated maze (compressed with MyCompressor) from server
                         InputStream is = new MyDecompressorInputStream(new ByteArrayInputStream(compressedMaze));
-                        byte[] decompressedMaze = new byte[(rows*cols)/10 /*CHANGE SIZE ACCORDING TO YOU MAZE SIZE*/]; //allocating byte[] for the decompressedmaze -
+                        byte[] decompressedMaze = new byte[(rows*cols)*2 /*CHANGE SIZE ACCORDING TO YOU MAZE SIZE*/]; //allocating byte[] for the decompressedmaze -
                         is.read(decompressedMaze); //Fill decompressedMaze with bytes
-                        Maze tmp = new Maze(decompressedMaze);
-                        maze = tmp.getMatrix();
-                        rowChar = tmp.getStartPosition().getRowIndex();
-                        colChar = tmp.getGoalPosition().getColumnIndex();
+                        maze = new Maze(decompressedMaze);
+                        rowChar = maze.getStartPosition().getRowIndex();
+                        colChar = maze.getStartPosition().getColumnIndex();
+                        rowCharGoal = maze.getGoalPosition().getRowIndex();
+                        colCharGoal = maze.getGoalPosition().getColumnIndex();
+                        mazeSolution = null;
                         setChanged();
                         notifyObservers();
 //execute maze on view object
@@ -146,8 +161,16 @@ public class MyModel extends Observable implements IModel {
     }
 
     @Override
-    public ArrayList<AState> getSolution() {
-        return mazeSolution.getSolutionPath();
+    public int[][] getSolution() {
+        if(mazeSolution != null) {
+            int[][] solution = new int[maze.getRows()][maze.getColumns()];
+            ArrayList<AState> path = mazeSolution.getSolutionPath();
+            for (int i = 0; i < path.size(); i++) {
+                solution[((Position) path.get(i).getState()).getRowIndex()][((Position) path.get(i).getState()).getColumnIndex()] = 1;
+            }
+            return solution;
+        }
+        return null;
     }
 
     @Override
@@ -162,67 +185,72 @@ public class MyModel extends Observable implements IModel {
             key = 1 => Down,Left / Left,Down
             key = 7 => Up,Left / Left,Up
          */
+        int[][] matrix = maze.getMatrix();
         switch(key){
-            case NUMPAD8:
+            case NUMPAD8,DIGIT8,UP:
                 try{
-                    if(maze[rowChar - 1][colChar] == 0) {
+                    if(matrix[rowChar - 1][colChar] == 0) {
                         rowChar = rowChar - 1;
                     }
                     break;
                 }catch (IndexOutOfBoundsException outOfBoundsException){break;}
-            case NUMPAD6:
+            case NUMPAD6,DIGIT6,RIGHT:
                 try{
-                    if(maze[rowChar][colChar + 1] == 0) {
+                    if(matrix[rowChar][colChar + 1] == 0) {
                         colChar = colChar + 1;
                     }
                     break;
                 }catch (IndexOutOfBoundsException outOfBoundsException){break;}
-            case NUMPAD2:
+            case NUMPAD2,DIGIT2,DOWN:
                 try{
-                    if(maze[rowChar + 1][colChar] == 0) {
+                    if(matrix[rowChar + 1][colChar] == 0) {
                         rowChar = rowChar + 1;
                     }
                     break;
                 }catch (IndexOutOfBoundsException outOfBoundsException){break;}
-            case NUMPAD4:
+            case NUMPAD4, DIGIT4, LEFT:
                 try{
-                    if(maze[rowChar][colChar - 1] == 0) {
+                    if(matrix[rowChar][colChar - 1] == 0) {
                         colChar = colChar - 1;
                     }
                     break;
                 }catch (IndexOutOfBoundsException outOfBoundsException){break;}
-            case NUMPAD9:
+            case NUMPAD9, DIGIT9:
                 try{
-                    if(maze[rowChar - 1][colChar + 1] == 0) {
-                        if(maze[rowChar][colChar + 1] == 0 || maze[rowChar - 1][colChar] == 0) {
-                            rowChar = rowChar - 1;
+                    if(matrix[rowChar - 1][colChar + 1] == 0) {
+                        if(matrix[rowChar][colChar + 1] == 0 || matrix[rowChar - 1][colChar] == 0) {
+                            rowChar--;
+                            colChar++;
                         }
                     }
                     break;
                 }catch (IndexOutOfBoundsException outOfBoundsException){break;}
-            case NUMPAD3:
+            case NUMPAD3,DIGIT3:
                 try{
-                    if(maze[rowChar + 1][colChar + 1] == 0) {
-                        if(maze[rowChar][colChar + 1] == 0 || maze[rowChar + 1][colChar] == 0) {
-                            rowChar = rowChar - 1;
+                    if(matrix[rowChar + 1][colChar + 1] == 0) {
+                        if(matrix[rowChar][colChar + 1] == 0 || matrix[rowChar + 1][colChar] == 0) {
+                            rowChar++;
+                            colChar++;
                         }
                     }
                     break;
                 }catch (IndexOutOfBoundsException outOfBoundsException){ break;}
-            case NUMPAD1:
+            case NUMPAD1, DIGIT1:
                 try{
-                    if(maze[rowChar + 1][colChar - 1] == 0) {
-                        if(maze[rowChar][colChar - 1] == 0 || maze[rowChar + 1][colChar] == 0) {
-                            rowChar = rowChar - 1;
+                    if(matrix[rowChar + 1][colChar - 1] == 0) {
+                        if(matrix[rowChar][colChar - 1] == 0 || matrix[rowChar + 1][colChar] == 0) {
+                            rowChar++;
+                            colChar--;
                         }
                     }
                     break;
                 }catch (IndexOutOfBoundsException outOfBoundsException){break;}
-            case NUMPAD7:
+            case NUMPAD7,DIGIT7:
                 try{
-                    if(maze[rowChar - 1][colChar - 1] == 0) {
-                        if(maze[rowChar][colChar - 1] == 0 || maze[rowChar - 1][colChar] == 0) {
-                            rowChar = rowChar - 1;
+                    if(matrix[rowChar - 1][colChar - 1] == 0) {
+                        if(matrix[rowChar][colChar - 1] == 0 || matrix[rowChar - 1][colChar] == 0) {
+                            rowChar--;
+                            colChar--;
                         }
                     }
                     break;

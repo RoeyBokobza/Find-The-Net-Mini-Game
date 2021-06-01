@@ -10,7 +10,9 @@ import java.util.Observer;
 public class MyViewModel extends Observable implements Observer {
     private IModel model;
     private int[][] maze;
+    private int[][] solution;
     private int rowChar,colChar;
+    private int rowCharGoal, colCharGoal;
 
     public MyViewModel(IModel model){
         this.model = model;
@@ -28,10 +30,16 @@ public class MyViewModel extends Observable implements Observer {
         return colChar;
     }
 
+    public int getRowCharGoal() {
+        return rowCharGoal;
+    }
+
+    public int getColCharGoal() {
+        return colCharGoal;
+    }
+
     public void generateMaze(int row, int col) {
         model.generateMaze(row, col);
-        rowChar = model.getRowChar();
-        colChar = model.getColChar();
     }
     public void solveMaze(){
         model.solveMaze();
@@ -39,6 +47,10 @@ public class MyViewModel extends Observable implements Observer {
 
     public int[][] getMaze() {
         return maze;
+    }
+
+    public int[][] getSolution() {
+        return solution;
     }
 
     public void updateCharacterLocation(KeyCode key){
@@ -52,6 +64,9 @@ public class MyViewModel extends Observable implements Observer {
                 this.maze = model.getMaze();
                 this.rowChar = model.getRowChar();
                 this.colChar = model.getColChar();
+                this.rowCharGoal = model.getRowCharGoal();
+                this.colCharGoal = model.getColCharGoal();
+                this.solution = null;
             }
             else{
                 int[][] tmpMaze = model.getMaze();
@@ -60,7 +75,8 @@ public class MyViewModel extends Observable implements Observer {
                     int rowChar = model.getRowChar();
                     int colChar = model.getColChar();
                     if(this.rowChar == rowChar && this.colChar == colChar){ //solve maze
-                        //get solution
+                        if(model.getSolution() != null)
+                            this.solution = model.getSolution();
                     }
                     else{
                         this.rowChar = rowChar;
@@ -71,6 +87,9 @@ public class MyViewModel extends Observable implements Observer {
                     this.maze = tmpMaze;
                     this.rowChar = model.getRowChar();
                     this.colChar = model.getColChar();
+                    this.rowCharGoal = model.getRowCharGoal();
+                    this.colCharGoal = model.getColCharGoal();
+                    this.solution = null;
                 }
             }
 

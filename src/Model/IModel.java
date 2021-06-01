@@ -10,11 +10,12 @@ public interface IModel {
     void generateMaze(int row, int col);
     int[][] getMaze();
     void solveMaze();
-    ArrayList<AState> getSolution();
+    int[][] getSolution();
     void updateCharacterLocation(KeyCode key);
     int getRowChar();
     int getColChar();
     void saveGame(String fileName);
     void assignObserver(Observer o);
-
+    int getRowCharGoal();
+    int getColCharGoal();
 }
