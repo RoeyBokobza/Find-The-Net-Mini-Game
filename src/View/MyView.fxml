@@ -35,9 +35,9 @@
                </rowConstraints>
                <Label text="Maze rows:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                <Label text="Maze columns:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-               <TextField fx:id="textField_mazeRows" text="50" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-               <TextField fx:id="textField_mazeColumns" text="50" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-               <Button onAction="#generateMaze" prefHeight="33.0" prefWidth="200.0" text="Generate Maze" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+               <TextField  text="50" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+               <TextField text="50" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               <Button prefHeight="33.0" prefWidth="200.0" text="Generate Maze" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="2" />
                <Button fx:id="solveMaze" cancelButton="true" onAction="#solveMaze" prefHeight="33.0" prefWidth="200.0" text="Solve Maze" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="3" />
                <Label text="Player Row = " GridPane.rowIndex="4" />
                <Label text="Player Col = " GridPane.rowIndex="5" />
@@ -66,6 +66,8 @@
                <menus>
                   <Menu mnemonicParsing="false" text="File">
                      <items>
+                        <MenuItem mnemonicParsing="false" onAction="#openNewMazeWindow" text="New"/>
+                        <MenuItem  mnemonicParsing="false" onAction="#solveMaze" text="Solve"/>
                         <MenuItem mnemonicParsing="false" onAction="#openFile" text="Open" />
                         <MenuItem mnemonicParsing="false" text="Close" />
                      </items>

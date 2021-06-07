@@ -67,6 +67,7 @@ public class MyViewModel extends Observable implements Observer {
                 this.rowCharGoal = model.getRowCharGoal();
                 this.colCharGoal = model.getColCharGoal();
                 this.solution = null;
+
             }
             else{
                 int[][] tmpMaze = model.getMaze();

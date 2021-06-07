@@ -1,19 +1,25 @@
 package View;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 
+import Model.IModel;
+import Model.MyModel;
 import ViewModel.*;
 import algorithms.search.AState;
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -21,6 +27,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.stage.FileChooser.ExtensionFilter;
 
@@ -30,8 +37,8 @@ public class MyViewController implements Initializable,IView, Observer {
     private int[][] maze = null;
     private int[][] solution = null;
     public Button solveMaze;
-    public TextField textField_mazeRows;
-    public TextField textField_mazeColumns;
+    //public TextField textField_mazeRows;
+    //public TextField textField_mazeColumns;
     public MazeDisplayer mazeDisplayer;
     public Label playerRow;
     public Label playerCol;
@@ -60,18 +67,17 @@ public class MyViewController implements Initializable,IView, Observer {
         this.updatePlayerCol.set(updatePlayerCol + "");
     }
 
+    public void generateMaze(int rows, int cols){
+        viewModel.generateMaze(rows,cols);
+        this.solveMaze.setDisable(false);
+}
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.playerRow.textProperty().bind(this.updatePlayerRow);
         this.playerCol.textProperty().bind(this.updatePlayerCol);
         this.solveMaze.setDisable(true);
     }
 
-    public void generateMaze(ActionEvent actionEvent) {
-        int rows = Integer.valueOf(this.textField_mazeRows.getText());
-        int cols = Integer.valueOf(this.textField_mazeColumns.getText());
-        viewModel.generateMaze(rows,cols);
-        this.solveMaze.setDisable(false);
-    }
+
 
     public void solveMaze(ActionEvent actionEvent) {
         viewModel.solveMaze();
@@ -118,6 +124,7 @@ public class MyViewController implements Initializable,IView, Observer {
                 this.solution = null;
                 this.mazeDisplayer.drawMaze(maze);
                 this.setPlayerPosition(viewModel.getRowChar(), viewModel.getColChar());
+                this.mazeDisplayer.requestFocus();
             }
             else{
                 int[][] tmpMaze = viewModel.getMaze();
@@ -130,6 +137,7 @@ public class MyViewController implements Initializable,IView, Observer {
                         if(viewModel.getSolution() != null) {
                             solution = viewModel.getSolution();
                             mazeDisplayer.drawSolution(solution);
+                            this.mazeDisplayer.requestFocus();
                         }
                     }
                 }
@@ -140,8 +148,20 @@ public class MyViewController implements Initializable,IView, Observer {
                     this.solution = null;
                     this.mazeDisplayer.drawMaze(maze);
                     this.setPlayerPosition(viewModel.getRowChar(), viewModel.getColChar());
+                    this.mazeDisplayer.requestFocus();
                 }
             }
         }
+    }
+
+    public void openNewMazeWindow(ActionEvent actionEvent) throws IOException {
+        Stage window = new Stage();
+        FXMLLoader fxmlLoader11 = new FXMLLoader(this.getClass().getResource("New_Maze.fxml"));
+        Parent root1 = (Parent) fxmlLoader11.load();
+        Scene scene = new Scene(root1,300,200);
+        window.setScene(scene);
+        window.show();
+        NewMazeMenuController view = fxmlLoader11.getController();
+        view.setMainView(this);
     }
 }
