@@ -1,7 +1,9 @@
 package View;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -13,30 +15,38 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.util.Duration;
 
 
 public class MyViewController implements Initializable,IView, Observer {
     private MyViewModel viewModel;
     private int[][] maze = null;
     private int[][] solution = null;
-    public Button solveMaze;
-    public TextField textField_mazeRows;
-    public TextField textField_mazeColumns;
+    public MenuItem solveMaze;
     public MazeDisplayer mazeDisplayer;
     public Label playerRow;
     public Label playerCol;
     StringProperty updatePlayerRow = new SimpleStringProperty();
     StringProperty updatePlayerCol = new SimpleStringProperty();
+    private String solveSound = "Resources/soundtrack/eyal.mp3";
+    private MediaPlayer mediaPlayer1;
 
     public MyViewController() { }
 
@@ -64,11 +74,22 @@ public class MyViewController implements Initializable,IView, Observer {
         this.playerRow.textProperty().bind(this.updatePlayerRow);
         this.playerCol.textProperty().bind(this.updatePlayerCol);
         this.solveMaze.setDisable(true);
+        //playMusic(backgroundSound);
     }
 
-    public void generateMaze(ActionEvent actionEvent) {
-        int rows = Integer.valueOf(this.textField_mazeRows.getText());
-        int cols = Integer.valueOf(this.textField_mazeColumns.getText());
+
+    private void playEffect(String path){
+        Media m = new Media(Paths.get(solveSound).toUri().toString());
+        mediaPlayer1 = new MediaPlayer(m);
+        mediaPlayer1.setOnEndOfMedia(new Runnable() {
+            public void run() {
+                mediaPlayer1.stop();
+            }
+        });
+        mediaPlayer1.play();
+    }
+
+    public void generateMaze(int rows, int cols) {
         viewModel.generateMaze(rows,cols);
         this.solveMaze.setDisable(false);
     }
@@ -97,15 +118,7 @@ public class MyViewController implements Initializable,IView, Observer {
     }
 
     public void mouseClicked(MouseEvent mouseEvent) {
-        this.mazeDisplayer.requestFocus();
-    }
-
-    public void ZoomIn(ActionEvent event){
-        mazeDisplayer.ZoomIn();
-    }
-
-    public void ZoomOut(ActionEvent event){
-        mazeDisplayer.ZoomOut();
+       this.mazeDisplayer.requestFocus();
     }
 
     @Override
@@ -117,19 +130,27 @@ public class MyViewController implements Initializable,IView, Observer {
                 this.mazeDisplayer.setColCharGoal(viewModel.getColCharGoal());
                 this.solution = null;
                 this.mazeDisplayer.drawMaze(maze);
+                this.mazeDisplayer.requestFocus();
                 this.setPlayerPosition(viewModel.getRowChar(), viewModel.getColChar());
             }
             else{
                 int[][] tmpMaze = viewModel.getMaze();
 
                 if(this.maze == tmpMaze){
+                    MediaPlayer mediaPlayer1;
                     if(Integer.parseInt(playerRow.getText()) != viewModel.getRowChar() ||Integer.parseInt(playerCol.getText()) != viewModel.getColChar()){
-                        setPlayerPosition(viewModel.getRowChar(), viewModel.getColChar());
+                        int row = viewModel.getRowChar();
+                        int col = viewModel.getColChar();
+                        if(row == viewModel.getRowCharGoal() && col == viewModel.getColCharGoal()){
+                            playEffect(solveSound);
+                        }
+                        setPlayerPosition(row, col);
                     }
                     else{
                         if(viewModel.getSolution() != null) {
-                            solution = viewModel.getSolution();
-                            mazeDisplayer.drawSolution(solution);
+                            this.solution = viewModel.getSolution();
+                            this.mazeDisplayer.drawSolution(solution);
+                            this.mazeDisplayer.requestFocus();
                         }
                     }
                 }
@@ -139,9 +160,21 @@ public class MyViewController implements Initializable,IView, Observer {
                     this.mazeDisplayer.setColCharGoal(viewModel.getColCharGoal());
                     this.solution = null;
                     this.mazeDisplayer.drawMaze(maze);
+                    this.mazeDisplayer.requestFocus();
                     this.setPlayerPosition(viewModel.getRowChar(), viewModel.getColChar());
                 }
             }
         }
+    }
+
+    public void openNewMazeWindow(ActionEvent actionEvent) throws IOException {
+        Stage window = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("NewMaze.fxml"));
+        Parent root1 = (Parent) fxmlLoader.load();
+        Scene scene = new Scene(root1,300,200);
+        window.setScene(scene);
+        window.show();
+        NewMazeMenuController view = fxmlLoader.getController();
+        view.setMainView(this);
     }
 }
