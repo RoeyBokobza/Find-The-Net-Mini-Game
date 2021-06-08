@@ -5,19 +5,38 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="376.0" prefWidth="499.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.StartScreenController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="499.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.StartScreenController">
     <children>
-        <ImageView fx:id="image1" fitHeight="376.0" fitWidth="502.0" layoutX="-2.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="image1" fitHeight="358.0" fitWidth="502.0" layoutX="-2.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../Resources/images/StartImage.jpg"/>
+                <Image url="https://labs.sentinelone.com/wp-content/uploads/2020/07/Enter-the-Maze_-Demystifying-an-affiliate-involved-in-Maze-Snow-9-1140x597.jpg" />
             </image>
         </ImageView>
-        <Label layoutX="74.0" layoutY="57.0" prefHeight="54.0" prefWidth="363.0" text="Weclome to MiniMaze!" textFill="#c21008">
+        <Label layoutX="74.0" layoutY="57.0" prefHeight="54.0" prefWidth="363.0" text="Weclome to MiniMaze!">
             <font>
                 <Font name="Tahoma Bold" size="32.0" />
             </font>
+         <textFill>
+            <RadialGradient centerX="0.502222188313802" centerY="0.5" cycleMethod="REFLECT" focusAngle="3.31" focusDistance="-0.4930232735567315" radius="0.5">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="1.0" green="0.03333333507180214" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.34959062933921814" green="0.6605926156044006" blue="0.7736842036247253" />
+                     </color>
+                  </Stop>
+               </stops>
+            </RadialGradient>
+         </textFill>
         </Label>
         <Button fx:id="Start_bu" layoutX="-7.0" layoutY="-8.0" mnemonicParsing="false" onAction="#StartGame" prefHeight="389.0" prefWidth="508.0" style="-fx-background-color: transparent;" text="Click Anywhre To Start" textFill="RED">
             <font>
