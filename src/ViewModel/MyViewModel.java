@@ -112,4 +112,7 @@ public class MyViewModel extends Observable implements Observer {
         model.loadGame(chosen);
     }
 
+    public void setProperties(String sol, String gen, String nThreads){
+        model.setProperties(sol,gen,nThreads);
+    }
 }

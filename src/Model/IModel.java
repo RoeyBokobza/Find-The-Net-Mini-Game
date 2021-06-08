@@ -9,16 +9,30 @@ import java.util.Observer;
 
 public interface IModel {
     void generateMaze(int row, int col);
+
     int[][] getMaze();
+
     void solveMaze();
+
     int[][] getSolution();
+
     void updateCharacterLocation(KeyCode key);
+
     int getRowChar();
+
     int getColChar();
+
     void saveGame(File file);
+
     void loadGame(File file);
+
     void Close();
+
     void assignObserver(Observer o);
+
     int getRowCharGoal();
+
     int getColCharGoal();
+
+    void setProperties(String sol, String gen, String nThreads);
 }

@@ -24,8 +24,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
@@ -43,10 +45,13 @@ public class MyViewController implements Initializable,IView, Observer {
     public MazeDisplayer mazeDisplayer;
     public Label playerRow;
     public Label playerCol;
+    public Label playerRowText;
+    public Label playerColText;
     StringProperty updatePlayerRow = new SimpleStringProperty();
     StringProperty updatePlayerCol = new SimpleStringProperty();
     private String solveSound = "Resources/soundtrack/eyal.mp3";
     private MediaPlayer mediaPlayer1;
+
 
 
     public MyViewController() {}
@@ -72,10 +77,12 @@ public class MyViewController implements Initializable,IView, Observer {
     }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.playerRowText.setVisible(false);
+        this.playerColText.setVisible(false);
         this.playerRow.textProperty().bind(this.updatePlayerRow);
         this.playerCol.textProperty().bind(this.updatePlayerCol);
         this.solveGame.setDisable(true);
-        //playMusic(backgroundSound);
+
     }
 
 
@@ -90,9 +97,16 @@ public class MyViewController implements Initializable,IView, Observer {
         mediaPlayer1.play();
     }
 
+    @Override
+    public void stopEffect(){
+        mediaPlayer1.stop();
+    }
+
     public void generateMaze(int rows, int cols) {
         viewModel.generateMaze(rows,cols);
         this.solveGame.setDisable(false);
+        this.playerRowText.setVisible(true);
+        this.playerColText.setVisible(true);
     }
 
     public void solveGame(ActionEvent actionEvent) {
@@ -158,6 +172,20 @@ public class MyViewController implements Initializable,IView, Observer {
                         int col = viewModel.getColChar();
                         if(row == viewModel.getRowCharGoal() && col == viewModel.getColCharGoal()){
                             playEffect(solveSound);
+                            mazeDisplayer.setDisable(true);
+                            Stage winWindow = new Stage();
+                            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("WinScene.fxml"));
+                            Parent root2 = null;
+                            try {
+                                root2 = (Parent) fxmlLoader.load();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            Scene scene = new Scene(root2,300,200);
+                            winWindow.setScene(scene);
+                            winWindow.show();
+                            WinSceneController view = fxmlLoader.getController();
+                            view.setMainView(this);
                         }
                         setPlayerPosition(row, col);
                     }
@@ -193,4 +221,18 @@ public class MyViewController implements Initializable,IView, Observer {
         view.setMainView(this);
     }
 
+    public void openProperties(ActionEvent actionEvent) throws IOException {
+        Stage window = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("Properties.fxml"));
+        Parent root1 = (Parent) fxmlLoader.load();
+        Scene scene = new Scene(root1,400,300);
+        window.setScene(scene);
+        window.show();
+        PropertiesController view = fxmlLoader.getController();
+        view.setMainView(this);
+    }
+
+    public void setProperties(String sol, String gen, String nThreads){
+        viewModel.setProperties(sol,gen,nThreads);
+    }
 }

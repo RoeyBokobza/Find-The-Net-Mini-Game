@@ -25,9 +25,10 @@ public class MyModel extends Observable implements IModel {
     private Maze maze;
     private int rowChar, colChar;
     private Solution mazeSolution;
+    private Configurations config = Configurations.getInstance();
 
 
-    public MyModel(){
+    public MyModel() throws IOException {
 
         mazeGenerator = new Server(5400, 1000, new ServerStrategyGenerateMaze());
         mazeSolver = new Server(5401, 1000, new ServerStrategySolveSearchProblem());
@@ -63,10 +64,8 @@ public class MyModel extends Observable implements IModel {
     }
 
     public void Reopen(){
-        mazeGenerator = new Server(5400, 1000, new ServerStrategyGenerateMaze());
-        mazeSolver = new Server(5401, 1000, new ServerStrategySolveSearchProblem());
-        mazeGenerator.start();
-        mazeSolver.stop();
+        mazeGenerator.setStrategy(new ServerStrategyGenerateMaze());
+        mazeSolver.setStrategy(new ServerStrategySolveSearchProblem());
     }
 
     public void Close(){
@@ -288,6 +287,13 @@ public class MyModel extends Observable implements IModel {
         }
         setChanged();
         notifyObservers();
+    }
+
+    public void setProperties(String sol,String gen,String nThreads){
+        config.setGenerator(gen);
+        config.setAlgorithm(sol);
+        config.setThreads(nThreads);
+        Reopen();
     }
 
 }
