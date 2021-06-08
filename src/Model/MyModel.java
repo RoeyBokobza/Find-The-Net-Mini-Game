@@ -1,12 +1,15 @@
 package Model;
 
 import Client.*;
+import IO.MyCompressorOutputStream;
 import IO.MyDecompressorInputStream;
 import Server.*;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.AState;
 import algorithms.search.Solution;
+import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.input.KeyCode;
 
 import java.io.*;
@@ -21,7 +24,6 @@ public class MyModel extends Observable implements IModel {
     private Server mazeGenerator, mazeSolver;
     private Maze maze;
     private int rowChar, colChar;
-    private int rowCharGoal, colCharGoal;
     private Solution mazeSolution;
 
 
@@ -52,12 +54,12 @@ public class MyModel extends Observable implements IModel {
 
     @Override
     public int getRowCharGoal() {
-        return rowCharGoal;
+        return maze.getGoalPosition().getRowIndex();
     }
 
     @Override
     public int getColCharGoal() {
-        return colCharGoal;
+        return maze.getGoalPosition().getColumnIndex();
     }
 
     public void Reopen(){
@@ -70,12 +72,40 @@ public class MyModel extends Observable implements IModel {
     public void Close(){
         mazeGenerator.stop();
         mazeSolver.stop();
+        Platform.exit();
+        System.exit(0);
     }
 
     @Override
-    public void saveGame(String fileName){
-        //need to save the game to fileName location.
-        //suffix of .Maze
+    public void saveGame(File chosen){
+        try {
+// save maze to a file
+            OutputStream out = new MyCompressorOutputStream(new
+                    FileOutputStream(chosen));
+            out.write(maze.toByteArray());
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void loadGame(File chosen){
+        try {
+            InputStream in = new MyDecompressorInputStream(new
+                    FileInputStream(chosen));
+            byte[] savedMazeBytes = new byte[2000000];
+            in.read(savedMazeBytes);
+            in.close();
+            maze = new Maze(savedMazeBytes);
+            rowChar = maze.getStartPosition().getRowIndex();
+            colChar = maze.getStartPosition().getColumnIndex();
+            setChanged();
+            notifyObservers();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -114,8 +144,8 @@ public class MyModel extends Observable implements IModel {
                         maze = new Maze(decompressedMaze);
                         rowChar = maze.getStartPosition().getRowIndex();
                         colChar = maze.getStartPosition().getColumnIndex();
-                        rowCharGoal = maze.getGoalPosition().getRowIndex();
-                        colCharGoal = maze.getGoalPosition().getColumnIndex();
+                        //rowCharGoal = maze.getGoalPosition().getRowIndex();
+                        //colCharGoal = maze.getGoalPosition().getColumnIndex();
                         mazeSolution = null;
                         setChanged();
                         notifyObservers();

@@ -39,7 +39,7 @@ public class MyViewController implements Initializable,IView, Observer {
     private MyViewModel viewModel;
     private int[][] maze = null;
     private int[][] solution = null;
-    public MenuItem solveMaze;
+    public MenuItem solveGame;
     public MazeDisplayer mazeDisplayer;
     public Label playerRow;
     public Label playerCol;
@@ -48,7 +48,8 @@ public class MyViewController implements Initializable,IView, Observer {
     private String solveSound = "Resources/soundtrack/eyal.mp3";
     private MediaPlayer mediaPlayer1;
 
-    public MyViewController() { }
+
+    public MyViewController() {}
 
     public void setViewModel(MyViewModel viewModel) {
         this.viewModel = viewModel;
@@ -73,7 +74,7 @@ public class MyViewController implements Initializable,IView, Observer {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.playerRow.textProperty().bind(this.updatePlayerRow);
         this.playerCol.textProperty().bind(this.updatePlayerCol);
-        this.solveMaze.setDisable(true);
+        this.solveGame.setDisable(true);
         //playMusic(backgroundSound);
     }
 
@@ -91,11 +92,20 @@ public class MyViewController implements Initializable,IView, Observer {
 
     public void generateMaze(int rows, int cols) {
         viewModel.generateMaze(rows,cols);
-        this.solveMaze.setDisable(false);
+        this.solveGame.setDisable(false);
     }
 
-    public void solveMaze(ActionEvent actionEvent) {
+    public void solveGame(ActionEvent actionEvent) {
         viewModel.solveMaze();
+    }
+
+    public void saveGame(ActionEvent actionEvent) {
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Save maze");
+        fc.getExtensionFilters().add(new ExtensionFilter("Maze files (*.maze)", new String[]{"*.maze"}));
+        fc.setInitialDirectory(new File("./resources"));
+        File chosen = fc.showSaveDialog((Window)null);
+        viewModel.saveGame(chosen);
     }
 
     public void openFile(ActionEvent actionEvent) {
@@ -104,6 +114,11 @@ public class MyViewController implements Initializable,IView, Observer {
         fc.getExtensionFilters().add(new ExtensionFilter("Maze files (*.maze)", new String[]{"*.maze"}));
         fc.setInitialDirectory(new File("./resources"));
         File chosen = fc.showOpenDialog((Window)null);
+        viewModel.loadGame(chosen);
+    }
+
+    public void exitGame(ActionEvent actionEvent) {
+        viewModel.exitGame();
     }
 
     public void keyPressed(KeyEvent keyEvent) {
@@ -177,4 +192,5 @@ public class MyViewController implements Initializable,IView, Observer {
         NewMazeMenuController view = fxmlLoader.getController();
         view.setMainView(this);
     }
+
 }

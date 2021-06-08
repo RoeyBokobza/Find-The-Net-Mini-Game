@@ -4,6 +4,7 @@ package ViewModel;
 import Model.*;
 import javafx.scene.input.KeyCode;
 
+import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -97,6 +98,18 @@ public class MyViewModel extends Observable implements Observer {
             setChanged();
             notifyObservers();
         }
+    }
+
+    public void saveGame(File chosen){
+        model.saveGame(chosen);
+    }
+
+    public void exitGame(){
+        model.Close();
+    }
+
+    public void loadGame(File chosen){
+        model.loadGame(chosen);
     }
 
 }
