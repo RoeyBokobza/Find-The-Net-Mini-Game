@@ -58,6 +58,10 @@ public class MyViewModel extends Observable implements Observer {
         model.updateCharacterLocation(key);
     }
 
+    public void updateCharacterLocationMouse(double locX, double locY){
+        model.updateCharacterLocationMouse(locX,locY);
+    }
+
     @Override
     public void update(Observable o, Object arg) {
         if(o instanceof IModel){

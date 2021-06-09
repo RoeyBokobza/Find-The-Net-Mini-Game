@@ -30,10 +30,11 @@ public class Main extends Application {
 
     public void start(Stage primaryStage) throws Exception {
         firstStage = primaryStage;
-        firstStage.setTitle("MiniMaze");
+        firstStage.setTitle("Find The Net");
+        firstStage.getIcons().add(new Image("https://upload.wikimedia.org/wikipedia/en/thumb/4/47/FC_Barcelona_%28crest%29.svg/1200px-FC_Barcelona_%28crest%29.svg.png"));
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("StartScene.fxml"));
         Parent root = (Parent) fxmlLoader.load();
-        Scene startScene = new Scene(root , 520,300);
+        Scene startScene = new Scene(root , 600,375);
         firstStage.setScene(startScene);
         //FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("MyView.fxml"));
         //Parent root = (Parent) fxmlLoader.load();

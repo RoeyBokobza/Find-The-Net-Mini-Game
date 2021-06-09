@@ -1,6 +1,8 @@
 .root {
     -fx-background-color: white;
     -fx-background-image: url("https://www.felder-nof.com/images/images/hp_complementary_products.jpg");
+    -fx-background-size: cover;
+
 }
 Label {
     -fx-font-family: "Arial Narrow";
@@ -26,3 +28,4 @@ Button:hover {
     -fx-alignment: CENTER;
     -fx-content-display: LEFT;
 }
+

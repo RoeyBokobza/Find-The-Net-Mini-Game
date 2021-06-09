@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -47,12 +48,14 @@ public class StartScreenController implements Initializable {
     public void StartGame(ActionEvent event ) throws IOException {
         Start_bu.getScene().getWindow().hide();
         Stage window = new Stage();
+        window.setTitle("Find The Net");
+        window.getIcons().add(new Image("https://upload.wikimedia.org/wikipedia/en/thumb/4/47/FC_Barcelona_%28crest%29.svg/1200px-FC_Barcelona_%28crest%29.svg.png"));
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("MyView.fxml"));
         Parent root = (Parent) fxmlLoader.load();
         Scene scene = new Scene(root,1000,600);
         window.setScene(scene);
         window.show();
-        IModel model = new MyModel();
+            IModel model = new MyModel();
         MyViewModel viewModel = new MyViewModel(model);
         MyViewController view = fxmlLoader.getController();
         view.setViewModel(viewModel);

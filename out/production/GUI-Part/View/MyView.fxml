@@ -44,9 +44,9 @@
       </VBox>
    </top>
    <center>
-      <Pane fx:id="border" BorderPane.alignment="CENTER">
+      <Pane onMousePressed="#onDragOver" onMouseDragged="#onDragDone" fx:id="border" BorderPane.alignment="CENTER">
          <children>
-            <MazeDisplayer  fx:id="mazeDisplayer" height="550" imageFileNameGoal="./Resources/images/gate.jpg" imageFileNamePlayer="./Resources/images/mario.jpg" imageFileNameWall="./Resources/images/wall.png" onKeyPressed="#keyPressed" width="1000" />
+            <MazeDisplayer fx:id="mazeDisplayer" height="550" imageFileNameGoal="./Resources/images/gate.jpg" imageFileNamePlayer="./Resources/images/mario.jpg" imageFileNameWall="./Resources/images/wall.png" onKeyPressed="#keyPressed" width="1000" />
          </children>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

@@ -1,10 +1,13 @@
 .root {
     -fx-background-color: white;
+    -fx-background-image: url("https://ih1.redbubble.net/image.1487630247.6917/flat,750x1000,075,f.u1.jpg");
+    -fx-background-size: cover;
 }
 Label {
     -fx-font-family: "Arial Narrow";
     -fx-font-weight: bold;
     -fx-font-size: 16px;
+    -fx-text-fill: aliceblue;
 }
 
 Button {

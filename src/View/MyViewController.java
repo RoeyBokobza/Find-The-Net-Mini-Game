@@ -4,14 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 
 import ViewModel.*;
-import algorithms.search.AState;
-import javafx.beans.InvalidationListener;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
@@ -19,15 +16,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
@@ -49,9 +42,11 @@ public class MyViewController implements Initializable,IView, Observer {
     public Label playerColText;
     StringProperty updatePlayerRow = new SimpleStringProperty();
     StringProperty updatePlayerCol = new SimpleStringProperty();
-    private String solveSound = "Resources/soundtrack/eyal.mp3";
+    private String solveSound = "Resources/soundtrack/champions.mp3";
     private MediaPlayer mediaPlayer1;
 
+    private double locX = 0;
+    private double locY = 0;
 
 
     public MyViewController() {}
@@ -94,6 +89,7 @@ public class MyViewController implements Initializable,IView, Observer {
                 mediaPlayer1.stop();
             }
         });
+        mediaPlayer1.setStartTime(new Duration(53000));
         mediaPlayer1.play();
     }
 
@@ -154,19 +150,12 @@ public class MyViewController implements Initializable,IView, Observer {
     public void update(Observable o, Object arg) {
         if(o instanceof MyViewModel){
             if(maze == null){ //generate maze
-                this.maze = viewModel.getMaze();
-                this.mazeDisplayer.setRowCharGoal(viewModel.getRowCharGoal());
-                this.mazeDisplayer.setColCharGoal(viewModel.getColCharGoal());
-                this.solution = null;
-                this.mazeDisplayer.drawMaze(maze);
-                this.mazeDisplayer.requestFocus();
-                this.setPlayerPosition(viewModel.getRowChar(), viewModel.getColChar());
+                generate(viewModel.getMaze());
             }
             else{
                 int[][] tmpMaze = viewModel.getMaze();
 
                 if(this.maze == tmpMaze){
-                    MediaPlayer mediaPlayer1;
                     if(Integer.parseInt(playerRow.getText()) != viewModel.getRowChar() ||Integer.parseInt(playerCol.getText()) != viewModel.getColChar()){
                         int row = viewModel.getRowChar();
                         int col = viewModel.getColChar();
@@ -174,6 +163,8 @@ public class MyViewController implements Initializable,IView, Observer {
                             playEffect(solveSound);
                             mazeDisplayer.setDisable(true);
                             Stage winWindow = new Stage();
+                            winWindow.setTitle("Champion");
+                            winWindow.getIcons().add(new Image("https://upload.wikimedia.org/wikipedia/en/thumb/4/47/FC_Barcelona_%28crest%29.svg/1200px-FC_Barcelona_%28crest%29.svg.png"));
                             FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("WinScene.fxml"));
                             Parent root2 = null;
                             try {
@@ -181,7 +172,7 @@ public class MyViewController implements Initializable,IView, Observer {
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                            Scene scene = new Scene(root2,300,200);
+                            Scene scene = new Scene(root2,303,297);
                             winWindow.setScene(scene);
                             winWindow.show();
                             WinSceneController view = fxmlLoader.getController();
@@ -198,13 +189,7 @@ public class MyViewController implements Initializable,IView, Observer {
                     }
                 }
                 else{
-                    this.maze = tmpMaze;
-                    this.mazeDisplayer.setRowCharGoal(viewModel.getRowCharGoal());
-                    this.mazeDisplayer.setColCharGoal(viewModel.getColCharGoal());
-                    this.solution = null;
-                    this.mazeDisplayer.drawMaze(maze);
-                    this.mazeDisplayer.requestFocus();
-                    this.setPlayerPosition(viewModel.getRowChar(), viewModel.getColChar());
+                    generate(tmpMaze);
                 }
             }
         }
@@ -212,6 +197,8 @@ public class MyViewController implements Initializable,IView, Observer {
 
     public void openNewMazeWindow(ActionEvent actionEvent) throws IOException {
         Stage window = new Stage();
+        window.setTitle("Create New Training");
+        window.getIcons().add(new Image("https://upload.wikimedia.org/wikipedia/en/thumb/4/47/FC_Barcelona_%28crest%29.svg/1200px-FC_Barcelona_%28crest%29.svg.png"));
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("NewMaze.fxml"));
         Parent root1 = (Parent) fxmlLoader.load();
         Scene scene = new Scene(root1,300,200);
@@ -223,6 +210,8 @@ public class MyViewController implements Initializable,IView, Observer {
 
     public void openProperties(ActionEvent actionEvent) throws IOException {
         Stage window = new Stage();
+        window.setTitle("Properties");
+        window.getIcons().add(new Image("https://cdn6.aptoide.com/imgs/2/4/0/240d1f1b423aaddc8e733c3d496a4f18_screen.png"));
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("Properties.fxml"));
         Parent root1 = (Parent) fxmlLoader.load();
         Scene scene = new Scene(root1,400,300);
@@ -234,5 +223,28 @@ public class MyViewController implements Initializable,IView, Observer {
 
     public void setProperties(String sol, String gen, String nThreads){
         viewModel.setProperties(sol,gen,nThreads);
+    }
+
+    public void onDragOver(MouseEvent dragEvent) {
+        locX = dragEvent.getScreenX();
+        locY = dragEvent.getScreenY();
+    }
+
+    public void onDragDone(MouseEvent dragEvent) {
+        locX -= dragEvent.getScreenX();
+        locY -= dragEvent.getScreenY();
+        viewModel.updateCharacterLocationMouse(locX,locY);
+    }
+
+    public void generate(int[][] tmpMaze){
+        this.maze = tmpMaze;
+        this.mazeDisplayer.setRowCharGoal(viewModel.getRowCharGoal());
+        this.mazeDisplayer.setColCharGoal(viewModel.getColCharGoal());
+        this.solution = null;
+        this.mazeDisplayer.drawMaze(maze);
+        this.mazeDisplayer.setDisable(false);
+        this.mazeDisplayer.requestFocus();
+        this.setPlayerPosition(viewModel.getRowChar(), viewModel.getColChar());
+
     }
 }

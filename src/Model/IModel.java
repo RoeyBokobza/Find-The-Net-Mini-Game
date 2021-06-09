@@ -18,6 +18,8 @@ public interface IModel {
 
     void updateCharacterLocation(KeyCode key);
 
+    void updateCharacterLocationMouse(double locX, double locY);
+
     int getRowChar();
 
     int getColChar();

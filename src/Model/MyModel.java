@@ -289,6 +289,51 @@ public class MyModel extends Observable implements IModel {
         notifyObservers();
     }
 
+    public void updateCharacterLocationMouse(double locX, double locY){
+        int[][] matrix = maze.getMatrix();
+        if(Math.abs(locX) > Math.abs(locY) && Math.abs(locX) > 30){
+            if(locX < 0){
+                try {
+                    if (matrix[rowChar][colChar + 1] == 0) {
+                        colChar = colChar + 1;
+                    }
+                }
+                catch (IndexOutOfBoundsException outOfBoundsException){}
+            }
+            else{
+                try {
+                    if (matrix[rowChar][colChar - 1] == 0) {
+                        colChar = colChar - 1;
+                    }
+                }
+                catch (IndexOutOfBoundsException outOfBoundsException){}
+
+            }
+        }
+        else if(Math.abs(locX) < Math.abs(locY) && Math.abs(locY) > 30){
+            if(locY > 0){
+                try {
+                    if (matrix[rowChar - 1][colChar] == 0) {
+                        rowChar = rowChar - 1;
+                    }
+                }
+                catch (IndexOutOfBoundsException outOfBoundsException){}
+
+            }
+            else{
+                try {
+                    if (matrix[rowChar + 1][colChar] == 0) {
+                        rowChar = rowChar + 1;
+                    }
+                }
+                catch (IndexOutOfBoundsException outOfBoundsException){}
+
+            }
+        }
+        setChanged();
+        notifyObservers();
+    }
+
     public void setProperties(String sol,String gen,String nThreads){
         config.setGenerator(gen);
         config.setAlgorithm(sol);
