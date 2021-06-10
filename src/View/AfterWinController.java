@@ -16,8 +16,8 @@ import java.io.IOException;
 public class AfterWinController {
     @FXML
     private Button NewMaze;
-
     private IView myView;
+
     public void OpenMyView(ActionEvent actionEvent) throws IOException {
         NewMaze.getScene().getWindow().hide();
     }

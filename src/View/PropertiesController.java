@@ -34,6 +34,7 @@ public class PropertiesController implements Initializable {
         });
     }
 
+
     public void setMainView(IView view){
         this.myView = view;
     }

@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
+
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="303.0" prefWidth="296.0" stylesheets="@SubStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.WinSceneController">
     <children>
         <Button fx:id="WinBut" layoutX="23.0" layoutY="233.0" mnemonicParsing="false" onAction="#afterWinButton" prefHeight="45.0" prefWidth="249.0" text="Winner Click here" textFill="#2b2626">

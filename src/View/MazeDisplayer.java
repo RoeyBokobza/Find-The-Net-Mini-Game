@@ -197,7 +197,7 @@ public class MazeDisplayer extends Canvas {
         //} catch (FileNotFoundException var15) {
         //    System.out.println("There is no wall image file");
         //}
-        for (int i = 0; i < rows; ++i) {
+        for (int i = 0; i < rows; ++i){
             for (int j = 0; j < cols; ++j) {
                 if (solution[i][j] == 1) {
                     double x = (double) j * cellWidth;

@@ -26,6 +26,7 @@ Button:hover {
     -fx-text-fill: -fx-text-base-color;
     -fx-alignment: CENTER;
     -fx-content-display: LEFT;
+
 }
 
 .scroll-pane .viewport {

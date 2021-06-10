@@ -35,7 +35,8 @@
             <Label text="Threads Number :" GridPane.rowIndex="2">
                <font>
                   <Font size="15.0" />
-               </font></Label>
+               </font>
+            </Label>
             <ChoiceBox fx:id="choiceSolve" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <ChoiceBox fx:id="choiceGenerator" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
             <TextField fx:id="nThreadsField" alignment="CENTER" text="1" prefHeight="25.0" prefWidth="145.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />

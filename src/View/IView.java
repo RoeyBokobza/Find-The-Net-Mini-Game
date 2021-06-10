@@ -11,5 +11,6 @@ public interface IView extends Observer {
     void setProperties(String sol, String gen, String nThreads);
     void stopEffect();
     void exitGame(ActionEvent actionEvent);
+
 }
 

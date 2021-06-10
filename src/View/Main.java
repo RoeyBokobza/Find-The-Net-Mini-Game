@@ -24,6 +24,7 @@ public class Main extends Application {
     private Button Start_bu;
     Stage firstStage;
 
+
     public Main() {
 
     }

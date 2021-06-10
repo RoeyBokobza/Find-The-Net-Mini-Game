@@ -10,6 +10,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
+
 <Pane stylesheets="@StartStyle.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.StartScreenController">
     <children>
         <Label layoutX="118.0" layoutY="70.0" prefHeight="54.0" prefWidth="363.0" text="Weclome to MiniMaze!">

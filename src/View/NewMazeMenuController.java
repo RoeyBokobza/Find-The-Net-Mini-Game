@@ -46,7 +46,7 @@ public class NewMazeMenuController implements Initializable {
     public void generateMaze(ActionEvent actionEvent) {
         int rows = Integer.valueOf(this.textField_mazeRows.getText());
         int cols = Integer.valueOf(this.textField_mazeColumns.getText());
-        if(rows > 1 && cols > 1) {
+        if(rows > 1 && cols > 1){
             myView.generateMaze(rows, cols);
             textField_mazeColumns.getScene().getWindow().hide();
         }

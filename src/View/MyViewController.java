@@ -226,7 +226,7 @@ public class MyViewController implements Initializable,IView, Observer {
         viewModel.setProperties(sol,gen,nThreads);
     }
 
-    public void onDragOver(MouseEvent dragEvent) {
+    public void onDragOver(MouseEvent dragEvent){
         locX = dragEvent.getScreenX();
         locY = dragEvent.getScreenY();
     }

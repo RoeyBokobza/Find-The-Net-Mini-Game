@@ -31,6 +31,7 @@ public class StartScreenController implements Initializable {
     private String backgroundSound = "Resources/soundtrack/background.mp3";
     private MediaPlayer mediaPlayer;
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         playMusic(backgroundSound);

@@ -23,7 +23,6 @@ public class WinSceneController implements Initializable {
     private IView myView;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
     }
 
     public void afterWinButton(ActionEvent actionEvent) throws IOException {

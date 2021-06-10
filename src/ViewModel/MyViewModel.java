@@ -98,7 +98,6 @@ public class MyViewModel extends Observable implements Observer {
                     this.solution = null;
                 }
             }
-
             setChanged();
             notifyObservers();
         }
