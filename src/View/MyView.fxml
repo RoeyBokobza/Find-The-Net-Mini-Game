@@ -12,7 +12,8 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<?import View.MazeDisplayer?>
+<?import View.*?>
+<?import javafx.scene.control.ScrollPane?>
 <BorderPane onMouseClicked="#mouseClicked" prefHeight="408.0" prefWidth="594.0" stylesheets="@MainStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MyViewController">
    <top>
       <VBox BorderPane.alignment="CENTER">
@@ -44,14 +45,12 @@
       </VBox>
    </top>
    <center>
-      <Pane onMousePressed="#onDragOver" onMouseDragged="#onDragDone" fx:id="border" BorderPane.alignment="CENTER">
-         <children>
-            <MazeDisplayer fx:id="mazeDisplayer" height="550" imageFileNameGoal="./Resources/images/gate.jpg" imageFileNamePlayer="./Resources/images/mario.jpg" imageFileNameWall="./Resources/images/wall.png" onKeyPressed="#keyPressed" width="1000" />
-         </children>
+      <ScrollPane onMousePressed="#onDragOver" onMouseDragged="#onDragDone" fx:id="border" BorderPane.alignment="CENTER">
+         <MazeDisplayer onZoomStarted="#finish" fx:id="mazeDisplayer" height="550" imageFileNameGoal="./Resources/images/gate.jpg" imageFileNamePlayer="./Resources/images/mario.jpg" imageFileNameWall="./Resources/images/wall.png" onKeyPressed="#keyPressed" width="1000" />
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
-      </Pane>
+      </ScrollPane>
    </center>
    <bottom>
       <GridPane prefHeight="32.0" prefWidth="594.0" BorderPane.alignment="CENTER">
@@ -64,9 +63,9 @@
          <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
-         <Label fx:id="playerRowText" text="Player Row = " />
+         <Label fx:id="playerRowText" text="Messi in Row = " />
          <Label fx:id="playerRow" GridPane.columnIndex="1" />
-         <Label fx:id="playerColText" text="Player Col = " GridPane.columnIndex="2" />
+         <Label fx:id="playerColText" text="Messi in Col = " GridPane.columnIndex="2" />
          <Label fx:id="playerCol" GridPane.columnIndex="3" />
       </GridPane>
    </bottom>

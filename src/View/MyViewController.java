@@ -19,8 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
@@ -35,6 +34,7 @@ public class MyViewController implements Initializable,IView, Observer {
     private int[][] maze = null;
     private int[][] solution = null;
     public MenuItem solveGame;
+    public MenuItem saveGame;
     public MazeDisplayer mazeDisplayer;
     public Label playerRow;
     public Label playerCol;
@@ -77,6 +77,7 @@ public class MyViewController implements Initializable,IView, Observer {
         this.playerRow.textProperty().bind(this.updatePlayerRow);
         this.playerCol.textProperty().bind(this.updatePlayerCol);
         this.solveGame.setDisable(true);
+        this.saveGame.setDisable(true);
 
     }
 
@@ -234,6 +235,7 @@ public class MyViewController implements Initializable,IView, Observer {
         locX -= dragEvent.getScreenX();
         locY -= dragEvent.getScreenY();
         viewModel.updateCharacterLocationMouse(locX,locY);
+
     }
 
     public void generate(int[][] tmpMaze){
@@ -243,8 +245,15 @@ public class MyViewController implements Initializable,IView, Observer {
         this.solution = null;
         this.mazeDisplayer.drawMaze(maze);
         this.mazeDisplayer.setDisable(false);
+        this.saveGame.setDisable(false);
         this.mazeDisplayer.requestFocus();
         this.setPlayerPosition(viewModel.getRowChar(), viewModel.getColChar());
+
+    }
+
+
+    public void finish(ScrollEvent scrollEvent) {
+        mazeDisplayer.setHeight(mazeDisplayer.getHeight() + 5);
 
     }
 }

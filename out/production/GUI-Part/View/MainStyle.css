@@ -1,7 +1,6 @@
 .root {
     -fx-background-color: white;
-    -fx-background-image: url("https://www.felder-nof.com/images/images/hp_complementary_products.jpg");
-    -fx-background-size: cover;
+
 
 }
 Label {
@@ -27,5 +26,10 @@ Button:hover {
     -fx-text-fill: -fx-text-base-color;
     -fx-alignment: CENTER;
     -fx-content-display: LEFT;
+}
+
+.scroll-pane .viewport {
+    -fx-background-image: url("https://www.felder-nof.com/images/images/hp_complementary_products.jpg");
+    -fx-background-size: cover;
 }
 

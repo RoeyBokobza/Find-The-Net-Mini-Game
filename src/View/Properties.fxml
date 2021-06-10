@@ -10,14 +10,8 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.PropertiesController">
-   <top>
-      <Label prefHeight="51.0" prefWidth="118.0" text="Properties" BorderPane.alignment="TOP_LEFT">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Label>
-   </top>
+<BorderPane stylesheets="@SubStyle.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.PropertiesController">
+
    <center>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -44,7 +38,7 @@
                </font></Label>
             <ChoiceBox fx:id="choiceSolve" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <ChoiceBox fx:id="choiceGenerator" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-            <TextField fx:id="nThreadsField" prefHeight="25.0" prefWidth="145.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="nThreadsField" alignment="CENTER" text="1" prefHeight="25.0" prefWidth="145.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
    </center>
