@@ -55,7 +55,7 @@ public class StartScreenController implements Initializable {
         Stage window = new Stage();
         window.setTitle("Find The Net");
         window.getIcons().add(new Image("https://upload.wikimedia.org/wikipedia/en/thumb/4/47/FC_Barcelona_%28crest%29.svg/1200px-FC_Barcelona_%28crest%29.svg.png"));
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/MyView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("/view/MyView.fxml"));
         Parent root = (Parent) fxmlLoader.load();
         Scene scene = new Scene(root,1020,620);
         window.setScene(scene);

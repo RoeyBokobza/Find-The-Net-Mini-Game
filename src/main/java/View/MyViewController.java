@@ -183,7 +183,7 @@ public class MyViewController implements Initializable,IView, Observer {
                             Stage winWindow = new Stage();
                             winWindow.setTitle("Champion");
                             winWindow.getIcons().add(new Image("https://upload.wikimedia.org/wikipedia/en/thumb/4/47/FC_Barcelona_%28crest%29.svg/1200px-FC_Barcelona_%28crest%29.svg.png"));
-                            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/WinScene.fxml"));
+                            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("/view/WinScene.fxml"));
                             Parent root2 = null;
                             try {
                                 root2 = (Parent) fxmlLoader.load();
@@ -217,7 +217,7 @@ public class MyViewController implements Initializable,IView, Observer {
         Stage window = new Stage();
         window.setTitle("Create New Training");
         window.getIcons().add(new Image("https://upload.wikimedia.org/wikipedia/en/thumb/4/47/FC_Barcelona_%28crest%29.svg/1200px-FC_Barcelona_%28crest%29.svg.png"));
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/NewMaze.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("/view/NewMaze.fxml"));
         Parent root1 = (Parent) fxmlLoader.load();
         Scene scene = new Scene(root1,300,200);
         window.setScene(scene);
@@ -230,7 +230,7 @@ public class MyViewController implements Initializable,IView, Observer {
         Stage window = new Stage();
         window.setTitle("Properties");
         window.getIcons().add(new Image("https://cdn6.aptoide.com/imgs/2/4/0/240d1f1b423aaddc8e733c3d496a4f18_screen.png"));
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/Properties.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("/view/Properties.fxml"));
         Parent root1 = (Parent) fxmlLoader.load();
         Scene scene = new Scene(root1,400,300);
         window.setScene(scene);
