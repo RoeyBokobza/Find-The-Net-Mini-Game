@@ -3,6 +3,7 @@
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_14">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <exclude-output />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/Resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
@@ -12,9 +13,21 @@
     </content>
     <orderEntry type="jdk" jdkName="corretto-15" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="lib" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-core:2.14.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-api:2.14.1" level="project" />
+    <orderEntry type="module-library">
+      <library name="lib">
+        <CLASSES>
+          <root url="file://$USER_HOME$/JetBrains/openjfx-16_windows-x64_bin-sdk/javafx-sdk-16/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/JetBrains/openjfx-16_windows-x64_bin-sdk/javafx-sdk-16/lib" />
+        </SOURCES>
+        <jarDirectory url="file://$USER_HOME$/JetBrains/openjfx-16_windows-x64_bin-sdk/javafx-sdk-16/lib" recursive="false" />
+        <jarDirectory url="file://$USER_HOME$/JetBrains/openjfx-16_windows-x64_bin-sdk/javafx-sdk-16/lib" recursive="false" type="SOURCES" />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="log4j-core-2.14.1" level="project" />
+    <orderEntry type="library" name="log4j-api-2.14.1" level="project" />
     <orderEntry type="library" name="ATP-Project-PartB" level="project" />
   </component>
 </module>

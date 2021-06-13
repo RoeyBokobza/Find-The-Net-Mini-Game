@@ -1,11 +1,8 @@
 package Model;
 
-import algorithms.search.AState;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
-
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Observer;
 
 public interface IModel {
