@@ -28,6 +28,14 @@
     </orderEntry>
     <orderEntry type="library" name="log4j-core-2.14.1" level="project" />
     <orderEntry type="library" name="log4j-api-2.14.1" level="project" />
-    <orderEntry type="library" name="ATP-Project-PartB" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/ATP-Project-PartB.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
