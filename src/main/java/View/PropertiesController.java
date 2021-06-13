@@ -6,8 +6,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Region;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -40,8 +42,12 @@ public class PropertiesController implements Initializable {
     }
 
     public void setProperties(ActionEvent actionEvent) {
-        if(nThreadsField.getText() == "")
-            myView.setProperties("" + choiceSolve.getValue(),"" + choiceGenerator.getValue(), "1");
+        if(nThreadsField.getText() == "") {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Number of threads must be 1 or above!");
+            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+            alert.show();
+        }
         else
             myView.setProperties("" + choiceSolve.getValue(),"" + choiceGenerator.getValue(), nThreadsField.getText());
         nThreadsField.getScene().getWindow().hide();

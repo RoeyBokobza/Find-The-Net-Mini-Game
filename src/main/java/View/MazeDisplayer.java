@@ -48,6 +48,8 @@ public class MazeDisplayer extends Canvas {
     public void ZoomIn() {
         setHeight(getHeight() + 10);
         setWidth(getWidth() + 10);
+        height = getHeight();
+        widht = getWidth();
         draw();
     }
 
@@ -62,6 +64,8 @@ public class MazeDisplayer extends Canvas {
     public void ZoomOut() {
         setHeight(getHeight() - 10);
         setWidth(getWidth() - 10);
+        height = getHeight();
+        widht = getWidth();
         draw();
     }
 

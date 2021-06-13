@@ -26,6 +26,7 @@ public class StartScreenController implements Initializable {
     private Button Start_bu;
     private String backgroundSound = "Resources/soundtrack/background.mp3";
     private MediaPlayer mediaPlayer;
+    private IView view;
 
 
     @Override
@@ -44,6 +45,11 @@ public class StartScreenController implements Initializable {
         mediaPlayer.play();
     }
 
+    public void exit(){
+        if(view != null)
+            view.exit();
+    }
+
     public void StartGame(ActionEvent event ) throws IOException {
         Start_bu.getScene().getWindow().hide();
         Stage window = new Stage();
@@ -56,7 +62,7 @@ public class StartScreenController implements Initializable {
         window.show();
         IModel model = new MyModel();
         MyViewModel viewModel = new MyViewModel(model);
-        MyViewController view = fxmlLoader.getController();
+        view = fxmlLoader.getController();
         view.setViewModel(viewModel);
         viewModel.addObserver(view);
     }

@@ -14,10 +14,16 @@ public class Main extends Application {
     @FXML
     private Button Start_bu;
     Stage firstStage;
+    StartScreenController view;
 
 
     public Main() {
 
+    }
+
+    @Override
+    public void stop() throws Exception {
+        view.exit();
     }
 
     public void start(Stage primaryStage) throws Exception {
@@ -27,10 +33,9 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/StartScene.fxml"));
         Parent root = (Parent) fxmlLoader.load();
         Scene startScene = new Scene(root , 600,375);
+        view = fxmlLoader.getController();
         firstStage.setScene(startScene);
         firstStage.show();
-
-
     }
 
     public static void main(String[] args) {

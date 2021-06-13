@@ -54,6 +54,7 @@ public class MyViewController implements Initializable,IView, Observer {
 
     public MyViewController() {}
 
+
     public void setViewModel(MyViewModel viewModel) {
         this.viewModel = viewModel;
     }
@@ -131,8 +132,10 @@ public class MyViewController implements Initializable,IView, Observer {
     }
 
     public void exitGame(ActionEvent actionEvent) {
-        viewModel.exitGame();
+        exit();
     }
+
+    public void exit(){viewModel.exitGame();}
 
     public void keyPressed(KeyEvent keyEvent) {
         if(keyEvent.getCode() == KeyCode.CONTROL){
@@ -273,7 +276,7 @@ public class MyViewController implements Initializable,IView, Observer {
 
     public void mouseDragged(MouseEvent mouseEvent) {
         if(isDragged && enoughToMove(mouseEvent, locX, locY)){
-            viewModel.updateCharacterLocationMouse(locX ,locY, mazeDisplayer.getCellHeight(),mazeDisplayer.getCellWidth());
+            viewModel.updateCharacterLocationMouse(mouseEvent, locX ,locY, mazeDisplayer.getCellHeight(),mazeDisplayer.getCellWidth());
             locX = mouseEvent.getX();
             locY = mouseEvent.getY();
         }

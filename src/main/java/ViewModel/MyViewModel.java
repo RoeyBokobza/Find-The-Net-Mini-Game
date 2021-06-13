@@ -3,6 +3,7 @@ package ViewModel;
 
 import Model.*;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 
 import java.io.File;
 import java.util.Observable;
@@ -58,8 +59,8 @@ public class MyViewModel extends Observable implements Observer {
         model.updateCharacterLocation(key);
     }
 
-    public void updateCharacterLocationMouse(double locX, double locY, double height, double width){
-        model.updateCharacterLocationMouse(locX,locY,height,width);
+    public void updateCharacterLocationMouse(MouseEvent mouseEvent, double locX, double locY, double height, double width){
+        model.updateCharacterLocationMouse(mouseEvent, locX,locY,height,width);
     }
 
     @Override

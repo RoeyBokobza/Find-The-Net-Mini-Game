@@ -2,6 +2,7 @@ package Model;
 
 import algorithms.search.AState;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public interface IModel {
 
     void updateCharacterLocation(KeyCode key);
 
-    void updateCharacterLocationMouse(double locX, double locY, double height, double width);
+    void updateCharacterLocationMouse(MouseEvent mouseEvent, double locX, double locY, double height, double width);
 
     int getRowChar();
 

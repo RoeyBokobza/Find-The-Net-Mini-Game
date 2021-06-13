@@ -10,6 +10,7 @@ import algorithms.search.AState;
 import algorithms.search.Solution;
 import javafx.application.Platform;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.*;
@@ -137,13 +138,9 @@ public class MyModel extends Observable implements IModel {
                         maze = new Maze(decompressedMaze);
                         rowChar = maze.getStartPosition().getRowIndex();
                         colChar = maze.getStartPosition().getColumnIndex();
-                        //rowCharGoal = maze.getGoalPosition().getRowIndex();
-                        //colCharGoal = maze.getGoalPosition().getColumnIndex();
                         mazeSolution = null;
                         setChanged();
                         notifyObservers();
-//execute maze on view object
-//print on the canvas
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -287,49 +284,89 @@ public class MyModel extends Observable implements IModel {
         notifyObservers();
     }
 
-    public void updateCharacterLocationMouse(double locX, double locY, double height, double width){
+    public void updateCharacterLocationMouse(MouseEvent mouseEvent, double locX, double locY, double height, double width){
         int[][] matrix = maze.getMatrix();
-        if(Math.abs(locX) > Math.abs(locY) && Math.abs(locX) > height){
-            if(locX < 0){
-                try {
-                    if (matrix[rowChar][colChar + 1] == 0) {
-                        colChar = colChar + 1;
+        if(matrix != null) {
+            int row = rowChar;
+            int col = colChar;
+            if(!mouseEvent.isControlDown()) {
+                if(mouseEvent.getY() < locY && (Math.abs(mouseEvent.getY() - locY) > height)){
+                    if(mouseEvent.getX() < locX && Math.abs(mouseEvent.getX()) - locX > width){
+                        try {
+                            if (matrix[rowChar - 1][colChar - 1] == 0) {
+                                if (matrix[rowChar][colChar - 1] == 0 || matrix[rowChar - 1][colChar] == 0) {
+                                    rowChar--;
+                                    colChar--;
+                                }
+                            }
+                        } catch (IndexOutOfBoundsException outOfBoundsException) {
+                        }
+                    }
+                    else if(mouseEvent.getX() > locX && Math.abs(mouseEvent.getX()) - locX > width){
+                        try {
+                            if (matrix[rowChar - 1][colChar + 1] == 0) {
+                                if (matrix[rowChar][colChar + 1] == 0 || matrix[rowChar - 1][colChar] == 0) {
+                                    rowChar--;
+                                    colChar++;
+                                }
+                            }
+                        } catch (IndexOutOfBoundsException outOfBoundsException) { }
+                    }
+                    else{
+                        try {
+                            if (matrix[rowChar - 1][colChar] == 0) {
+                                    rowChar--;
+                            }
+                        } catch (IndexOutOfBoundsException outOfBoundsException) { }
                     }
                 }
-                catch (IndexOutOfBoundsException outOfBoundsException){}
-            }
-            else{
-                try {
-                    if (matrix[rowChar][colChar - 1] == 0) {
-                        colChar = colChar - 1;
+                else if(mouseEvent.getY() > locY && Math.abs(mouseEvent.getY() - locY) > height){
+                    if(mouseEvent.getX() < locX && Math.abs(mouseEvent.getX() - locX) > width){
+                        try {
+                            if (matrix[rowChar + 1][colChar - 1] == 0) {
+                                if (matrix[rowChar][colChar - 1] == 0 || matrix[rowChar + 1][colChar] == 0) {
+                                    rowChar++;
+                                    colChar--;
+                                }
+                            }
+                        } catch (IndexOutOfBoundsException outOfBoundsException) { }
+                    }
+                    else if(mouseEvent.getX() > locX && Math.abs(mouseEvent.getX() - locX) > width){
+                        try {
+                            if (matrix[rowChar + 1][colChar + 1] == 0) {
+                                if (matrix[rowChar][colChar + 1] == 0 || matrix[rowChar + 1][colChar] == 0) {
+                                    rowChar++;
+                                    colChar++;
+                                }
+                            }
+                        } catch (IndexOutOfBoundsException outOfBoundsException) { }
+                    }
+                    else{
+                        try {
+                            if (matrix[rowChar + 1][colChar] == 0) {
+                                rowChar++;
+                            }
+                        } catch (IndexOutOfBoundsException outOfBoundsException) { }
                     }
                 }
-                catch (IndexOutOfBoundsException outOfBoundsException){}
-
+                else if(mouseEvent.getX() < locX && Math.abs(mouseEvent.getX() - locX) > width){
+                    try {
+                        if (matrix[rowChar][colChar - 1] == 0) {
+                            colChar--;
+                        }
+                    } catch (IndexOutOfBoundsException outOfBoundsException) { }
+                }
+                else if(mouseEvent.getX() > locX && Math.abs(mouseEvent.getX() - locX) > width){
+                    try {
+                        if (matrix[rowChar][colChar + 1] == 0) {
+                            colChar++;
+                        }
+                    } catch (IndexOutOfBoundsException outOfBoundsException) { }
+                }
+                setChanged();
+                notifyObservers();
             }
         }
-        else if(Math.abs(locX) < Math.abs(locY) && Math.abs(locY) > width){
-            if(locY > 0){
-                try {
-                    if (matrix[rowChar - 1][colChar] == 0) {
-                        rowChar = rowChar - 1;
-                    }
-                }
-                catch (IndexOutOfBoundsException outOfBoundsException){}
-
-            }
-            else{
-                try {
-                    if (matrix[rowChar + 1][colChar] == 0) {
-                        rowChar = rowChar + 1;
-                    }
-                }
-                catch (IndexOutOfBoundsException outOfBoundsException){}
-
-            }
-        }
-        setChanged();
-        notifyObservers();
     }
 
     public void setProperties(String sol,String gen,String nThreads){

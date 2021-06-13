@@ -30,6 +30,7 @@ public class WinSceneController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../view/AfterWinScene.fxml"));
         Parent root = (Parent) fxmlLoader.load();
         Scene scene = new Scene(root,400 ,200);
+        afterWinWindow.setTitle("What next?");
         afterWinWindow.setScene(scene);
         afterWinWindow.show();
         AfterWinController win = fxmlLoader.getController();
