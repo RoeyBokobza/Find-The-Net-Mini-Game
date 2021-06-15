@@ -27,7 +27,7 @@ public class MyModel extends Observable implements IModel {
     private int rowChar, colChar;
     private Solution mazeSolution;
     private Configurations config = Configurations.getInstance();
-    private static final Logger genLog = LogManager.getLogger();
+    private static Logger genLog = LogManager.getLogger();
 
 
 

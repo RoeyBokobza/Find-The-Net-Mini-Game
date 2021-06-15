@@ -142,11 +142,11 @@ public class MazeDisplayer extends Canvas {
         graphicsContext.setFill(Color.RED);
         Image wallImage = null;
 
-        try {
-            wallImage = new Image(new FileInputStream(this.getImageFileNameWall()));
-        } catch (FileNotFoundException var15) {
-            System.out.println("There is no wall image file");
-        }
+        //try {
+            wallImage = new Image(this.getClass().getClassLoader().getResourceAsStream(this.getImageFileNameWall()));
+        //} catch (FileNotFoundException var15) {
+        //    System.out.println("There is no wall image file");
+        //}
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
                 if (maze[i][j] == 1) {
@@ -169,12 +169,11 @@ public class MazeDisplayer extends Canvas {
         graphicsContext.setFill(Color.GREEN);
         Image playerImage = null;
 
-        try {
-            //playerImage = new Image(getClass().getResource("gif.gif").toString());
-            playerImage = new Image(new FileInputStream(this.getImageFileNamePlayer()));
-        } catch (FileNotFoundException var12) {
-            System.out.println("There is no player image file");
-        }
+        //try {
+            playerImage = new Image(this.getClass().getClassLoader().getResourceAsStream(this.getImageFileNamePlayer()));
+        //} catch (FileNotFoundException var12) {
+        //    System.out.println("There is no player image file");
+        //}
 
         if (playerImage == null) {
             graphicsContext.fillRect(x, y, cellWidth, cellHeight);
@@ -189,11 +188,11 @@ public class MazeDisplayer extends Canvas {
         double y = (double)this.getRowCharGoal() * cellHeight;
         Image playerImage = null;
 
-        try {
-            playerImage = new Image(new FileInputStream(this.getImageFileNameGoal()));
-        } catch (FileNotFoundException var12) {
-            System.out.println("There is no goal image file");
-        }
+        //try {
+            playerImage = new Image(this.getClass().getClassLoader().getResourceAsStream(this.getImageFileNameGoal()));
+        //} catch (FileNotFoundException var12) {
+        //    System.out.println("There is no goal image file");
+        //}
 
         if (!(playerImage == null)) {
             graphicsContext.drawImage(playerImage, x, y, cellWidth, cellHeight);

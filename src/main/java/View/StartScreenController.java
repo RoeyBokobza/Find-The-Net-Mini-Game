@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 public class StartScreenController implements Initializable {
     @FXML
     private Button Start_bu;
-    private String backgroundSound = "Resources/soundtrack/background.mp3";
+    private URL backgroundSound =  this.getClass().getResource("/soundtrack/background.mp3");
     private MediaPlayer mediaPlayer;
     private IView view;
 
@@ -34,8 +34,8 @@ public class StartScreenController implements Initializable {
         playMusic(backgroundSound);
     }
 
-    private void playMusic(String path) {
-        Media m = new Media(Paths.get(path).toUri().toString());
+    private void playMusic(URL path) {
+        Media m = new Media(path.toString());
         mediaPlayer = new MediaPlayer(m);
         mediaPlayer.setOnEndOfMedia(new Runnable() {
             public void run() {
@@ -55,7 +55,7 @@ public class StartScreenController implements Initializable {
         Stage window = new Stage();
         window.setTitle("Find The Net");
         window.getIcons().add(new Image("https://upload.wikimedia.org/wikipedia/en/thumb/4/47/FC_Barcelona_%28crest%29.svg/1200px-FC_Barcelona_%28crest%29.svg.png"));
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("/view/MyView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("/fxml/MyView.fxml"));
         Parent root = (Parent) fxmlLoader.load();
         Scene scene = new Scene(root,1020,620);
         window.setScene(scene);

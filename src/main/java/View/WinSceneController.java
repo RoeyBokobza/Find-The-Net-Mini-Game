@@ -27,7 +27,7 @@ public class WinSceneController implements Initializable {
         this.myView.stopEffect();
         Stage afterWinWindow = new Stage();
         afterWinWindow.getIcons().add(new Image("https://upload.wikimedia.org/wikipedia/en/thumb/4/47/FC_Barcelona_%28crest%29.svg/1200px-FC_Barcelona_%28crest%29.svg.png"));
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("/view/AfterWinScene.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("/fxml/AfterWinScene.fxml"));
         Parent root = (Parent) fxmlLoader.load();
         Scene scene = new Scene(root,400 ,200);
         afterWinWindow.setTitle("What next?");
