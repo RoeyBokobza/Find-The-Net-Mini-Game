@@ -33,7 +33,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#openProperties" text="Properties" />
                      </items>
                   </Menu>
-                  <Menu mnemonicParsing="false" text="Other">
+                  <Menu mnemonicParsing="false" text="Info">
                      <items>
                         <MenuItem onAction="#openAbout" mnemonicParsing="false" text="About" />
                         <MenuItem onAction="#openHelp" mnemonicParsing="false" text="Help" />

@@ -27,7 +27,7 @@ public class MyModel extends Observable implements IModel {
     private int rowChar, colChar;
     private Solution mazeSolution;
     private Configurations config = Configurations.getInstance();
-    private static Logger genLog = LogManager.getLogger();
+    //private static Logger genLog = LogManager.getLogger();
 
 
 
@@ -147,7 +147,7 @@ public class MyModel extends Observable implements IModel {
                 }
             });
             client.communicateWithServer();
-            genLog.info("Client accepted :" + InetAddress.getLocalHost().toString() + " request for maze in dimensions [" + rows +","+cols+"]");
+            //genLog.info("Client accepted :" + InetAddress.getLocalHost().toString() + " request for maze in dimensions [" + rows +","+cols+"]");
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
@@ -177,7 +177,7 @@ public class MyModel extends Observable implements IModel {
             });
             client.communicateWithServer();
             try {
-                genLog.info("Client accepted :" + InetAddress.getLocalHost().toString() + " request for maze solution. Solve algorithm: " + config.getPropertyValue("mazeSearchingAlgorithm") + " and the solution length is: " + mazeSolution.getSolutionPath().size());
+                //genLog.info("Client accepted :" + InetAddress.getLocalHost().toString() + " request for maze solution. Solve algorithm: " + config.getPropertyValue("mazeSearchingAlgorithm") + " and the solution length is: " + mazeSolution.getSolutionPath().size());
             }catch (Exception e){}
         } catch (UnknownHostException e) {
             e.printStackTrace();
