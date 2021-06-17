@@ -14,3 +14,5 @@
 2021.06.15 21:06:43.052 INFO  Model.MyModel - Client accepted :DESKTOP-SC8PFJK/192.168.26.1 request for maze in dimensions [10,10]
 2021.06.15 21:47:54.265 INFO  Model.MyModel - Client accepted :DESKTOP-SC8PFJK/192.168.26.1 request for maze in dimensions [10,10]
 2021.06.15 22:30:58.857 INFO  Model.MyModel - Client accepted :DESKTOP-SC8PFJK/192.168.26.1 request for maze in dimensions [10,10]
+2021.06.17 10:17:51.281 INFO  Model.MyModel - Client accepted :DESKTOP-SC8PFJK/192.168.26.1 request for maze in dimensions [10,10]
+2021.06.17 10:18:19.207 INFO  Model.MyModel - Client accepted :DESKTOP-SC8PFJK/192.168.26.1 request for maze in dimensions [10,10]

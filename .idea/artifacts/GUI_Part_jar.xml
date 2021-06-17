@@ -14,7 +14,7 @@
       <element id="extracted-dir" path="$USER_HOME$/JetBrains/openjfx-16_windows-x64_bin-sdk/javafx-sdk-16/lib/javafx.swing.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/JetBrains/openjfx-16_windows-x64_bin-sdk/javafx-sdk-16/lib/javafx.controls.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/JetBrains/openjfx-16_windows-x64_bin-sdk/javafx-sdk-16/lib/javafx.graphics.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../ATP-Project/out/artifacts/ATP_Project_PartB_jar/ATP-Project-PartB.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/ATP-Project-PartB.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
