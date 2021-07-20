@@ -1,0 +1,1 @@
+--module-path "C:\Users\roeyb\javafx-sdk-16\lib" --add-modules javafx.controls,javafx.fxml,javafx.media 
